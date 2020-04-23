@@ -18,7 +18,36 @@ if len(phrase) > 0 and phrase.isalpha() or phrase.replace(' ','').isalpha():
     print passphrase
 else:
     print "Error! Please enter only letters."
+
+# Commented out original defined function. Basically the problem was in the for loop and the method used to 'join' to the created password. The object 'choice' in the random module selects only *one* character in the given sequence. Your function was telling Python to pick a single letter from the given string, then the for loop was randomly choosing *from that single letter* and adding it to the passphrase, so you end up with a password that is the same character 8 times over.
+
+###### Original function #####
+# def random_phrase(passlength = 8):
+#     letters = random.choice(passphrase)
+#     return ''.join(random.choice(letters) for i in range(passlength))
+
+
+# This modification to your function works. Set the password as a blank string, then use the for loop to iterate 8 times through that password and choose a random character, appending that to the empty string.
+
+###### Working Modified Function #######
 def random_phrase(passlength = 8):
-    letters = random.choice(passphrase)
-    return ''.join(random.choice(letters) for i in range(passlength))
-print ("Your password is ", random_phrase())
+    password = ""
+    for i in range(passlength):
+        password = random.choice(letters)
+    return password
+
+# Made a small enhancement to the function, uncomment this one and comment out the other one to test it.
+# This works similar to the other, the letters variable converts the entered passphrase to a list of characters, then during each iteration the choice is made, added to the password string, and most importantly *removed* from the options during the next go-around of the loop. This way it limits the chances of the same character being chosen twice in a row. 
+
+####### Enhanced Modified Function #######
+# def random_phrase(passlength = 8):
+#     letters = [char for char in passphrase]
+#     password = ""
+#     for i in range(passlength):
+#         choice = random.choice(letters)
+#         password += choice
+#         letters.remove(choice)
+#     return password
+
+print "Your password is:", random_phrase()
+
