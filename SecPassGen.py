@@ -33,7 +33,7 @@ else:
 def random_phrase(passlength = 8):
     password = ""
     for i in range(passlength):
-        password = random.choice(passphrase)
+        password += random.choice(passphrase)
     return password
 
 # Made a small enhancement to the function, uncomment this one and comment out the other one to test it.
